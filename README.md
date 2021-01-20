@@ -1,7 +1,7 @@
 # Schema
-Three entities: `Authors`, `Books` and `Cities`
-`Books` has association to one `Author`, `Author` has association to one `City`
-__`Authors` and `Books` entities with `odata.draft.enabled`__
+Three entities: `Authors`, `Books` and `Cities`  
+`Books` has association to one `Author`, `Author` has association to one `City`  
+__`Authors` and `Books` entities with `odata.draft.enabled`__  
 `Books` table contains a record without reference to the `Author`
 
 # How to reproduce error
