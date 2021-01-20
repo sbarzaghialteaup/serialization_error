@@ -4,6 +4,12 @@ Three entities: `Authors`, `Books` and `Cities`
 __`Authors` and `Books` entities with `odata.draft.enabled`__  
 `Books` table contains a record without reference to the `Author`
 
+The fiori list display fields:
+- book.title
+- author.city.citizenCount
+
+Seems a problem related to deep navigation, but only in dev, in production (NODE_ENV=production) there is no problems
+
 # How to reproduce error
 Screenrecording:
 [recording](https://github.com/sbarzaghialteaup/serialization_error/blob/master/explain_problem.gif)
