@@ -6,7 +6,7 @@ __`Authors` and `Books` entities with `odata.draft.enabled`__
 
 # How to reproduce error
 Screenrecording:
-[recording](https://github.com/sbarzaghialteaup/cap_ambiguous_id/blob/master/explain_problem.gif)
+[recording](https://github.com/sbarzaghialteaup/serialization_error/blob/master/explain_problem.gif)
 
 Steps:
 - clone
@@ -20,39 +20,13 @@ An error occurred during serialization of the entity with the following key(s): 
 Not nullable value for 'ID' must not be null.
 ```
 
-# Light analysis
-This odata request:
-```
-"Authors?$search=allen&$orderby=name&$select=ID,IsActiveEntity,name&$skip=0&$top=20"
-```
+__The problems doesn't occurs in production.__
 
-is converted to sql:
-```
-SELECT
-  active.ID,
-  active.name,
-  true AS "IsActiveEntity",
-  false AS "HasActiveEntity",
-  null AS "DraftAdministrativeData_DraftUUID",
-  CASE WHEN DRAFTS.DRAFTADMINISTRATIVEDATA_DRAFTUUID IS NOT NULL THEN TRUE ELSE FALSE END AS "HasDraftEntity"
-FROM
-  CatalogService_Authors active
-  LEFT JOIN CatalogService_Authors_drafts drafts ON active.ID = drafts.ID
-WHERE
-  (
-    lower (ID) LIKE ? ESCAPE '^'
-    OR lower (name) LIKE ? ESCAPE '^'
-  )
-ORDER BY
-  active.name COLLATE NOCASE ASC,
-  active.ID COLLATE NOCASE ASC
-LIMIT
-  20
-```
+Try with:
+- export NODE_ENV=production
+- cds watch
+- open fiori preview for Books entity
+- search
+- you can see the correct data
 
-Error:
-```
-Error: SQLITE_ERROR: ambiguous column name: ID
-```
-
-No problems when no `odata.draft.enable` on the `Authors` entity
+[recording](https://github.com/sbarzaghialteaup/serialization_error/blob/master/recording_production.gif)
