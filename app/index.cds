@@ -13,7 +13,11 @@ annotate Services.Books with @(UI : {
     },
     {
         $Type : 'UI.DataField',
-        Value : author.city.state.citizenCount
+        Value : author.city_ID
+    },
+    {
+        $Type : 'UI.DataField',
+        Value : author.city.citizenCount
     },
     ]
 });

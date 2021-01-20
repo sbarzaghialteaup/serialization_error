@@ -1,6 +1,5 @@
 # CAP ambiguous_id
 _out
-*.db
 connection.properties
 default-*.json
 gen/

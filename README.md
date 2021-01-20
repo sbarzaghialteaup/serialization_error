@@ -1,7 +1,8 @@
 # Schema
-Two entities: `Authors` and `Books`  
-`Books` has association to one `Author`  
-__Both the entities with `odata.draft.enabled`__
+Three entities: `Authors`, `Books` and `Cities`
+`Books` has association to one `Author`, `Author` has association to one `City`
+__`Authors` and `Books` entities with `odata.draft.enabled`__
+`Books` table contains a record without reference to the `Author`
 
 # How to reproduce error
 Screenrecording:
@@ -11,9 +12,13 @@ Steps:
 - clone
 - cds watch
 - open fiori preview for Books entity
-- edit one book
-- in the field "Author" write "allen"
-- you get popup with error `SQLITE_ERROR: ambiguous column name: ID`
+- search
+- you get popup with error 
+```
+An error occurred during serialization of the entity collection.  
+An error occurred during serialization of the entity with the following key(s): ID: 7aa24fe3-6a4b-4f6c-bb89-de29c3251990, IsActiveEntity: true.  
+Not nullable value for 'ID' must not be null.
+```
 
 # Light analysis
 This odata request:

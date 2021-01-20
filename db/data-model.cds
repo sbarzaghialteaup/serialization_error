@@ -10,38 +10,26 @@ entity Books : cuid {
         TextArrangement : #TextOnly
     }
     @title  : 'Author'
-    author : Association to Authors;
+    author : Association to one Authors;
 }
 
 @cds.odata.valuelist
 entity Authors : cuid {
     @title  : 'Author'
     name : String;
-    @title  : 'From City'
+    @title  : 'Author From City'
     @Common : {
         Text            : city.name,
         TextArrangement : #TextOnly
     }
-    city : Association to Cities;
+    city : Association to one Cities;
 }
 
 @cds.odata.valuelist
 entity Cities : cuid {
     @title  : 'City'
     name   : String;
-    @title  : 'State'
-    @Common : {
-        Text            : state.name,
-        TextArrangement : #TextOnly
-    }
-    state : Association to States;
-}
-
-@cds.odata.valuelist
-entity States : cuid {
-    @title : 'State'
-    name         : String;
-    @title : 'State Citizen'
+    @title  : 'Citizen of the City'
     citizenCount : Integer;
 }
 
@@ -50,28 +38,6 @@ annotate Books with {
 }
 
 annotate Authors with {
-    ID @(
-        UI.Hidden,
-        Core.Computed,
-        Common.Text : {
-            $value                 : name,
-            ![@UI.TextArrangement] : #TextOnly
-        }
-    );
-}
-
-annotate Cities with {
-    ID @(
-        UI.Hidden,
-        Core.Computed,
-        Common.Text : {
-            $value                 : name,
-            ![@UI.TextArrangement] : #TextOnly
-        }
-    );
-}
-
-annotate States with {
     ID @(
         UI.Hidden,
         Core.Computed,
